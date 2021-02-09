@@ -24,6 +24,17 @@ public class Main {
 				break;
 			case 2:
 				//TODO Lista de Libros
+				listarlibro(catalogo);
+				break;
+			case 3:
+				//TODO Lista de Libros
+				borrar(catalogo);
+				break;
+			case 4:
+				//TODO Lista de Libros
+				break;
+			case 5:
+				//TODO Lista de Libros
 				break;
 			default:
 				break;
@@ -43,7 +54,7 @@ public class Main {
     		System.out.println("5. Ordenacion de Libros");
     		System.out.println("Introduce la opcion:");
     	
-    		opcion = leerOpcion(2);
+    		opcion = leerOpcion(5);
     		
     	}while(opcion <=0);
     	
@@ -105,6 +116,7 @@ public class Main {
     	String autor = datos[3];
     	Integer paginas = Integer.parseInt(datos[4]);
     	
+    	libro = new Libro(titulo,isbn,genero,autor,paginas);
     	
     	return libro;
     }
@@ -115,4 +127,32 @@ public class Main {
         opcion=teclado.nextLine();
     	return opcion;
     }
+    
+    public static void listarlibro(ArrayList<Libro>catalogo) {
+    	for(int i=0;i<catalogo.size();i++) {
+    			System.out.print(i+1+".");
+    	  		Libro libro = catalogo.get(i);
+    	  		System.out.println(" " +libro.getTitulo() + " " + libro.getIsbn() + " " + 
+    	  		libro.getGenero() + " " + libro.getAutor() + " " + libro.getPaginas());
+    	  }
+    	}
+    
+    public static void borrar(ArrayList<Libro>catalogo) {
+    	int libroelegido = 0;
+    	System.out.println("Elige el libro que quiere borrar:");
+    	Scanner teclado = new Scanner(System.in);
+			libroelegido=teclado.nextInt();
+		
+        libroelegido = libroelegido -1;
+        catalogo.remove(libroelegido);
+    	
+    }
+    
+    
+
+	@Override
+	public String toString() {
+		return "Main []";
+	}
+    
 }
