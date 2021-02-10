@@ -34,7 +34,18 @@ public class Main {
 				//TODO Lista de Libros
 				break;
 			case 5:
+				ordennatural(catalogo);
 				//TODO Lista de Libros
+				break;
+			case 6:
+				//TODO Lista de Libros
+				break;
+			case 7:
+				//TODO Lista de Libros
+				break;
+			case 8:
+				//TODO Lista de Libros
+				borrarcatalogo(catalogo);
 				break;
 			default:
 				break;
@@ -52,9 +63,12 @@ public class Main {
     		System.out.println("3. Baja de Libros");
     		System.out.println("4. Búsqueda de Libros");
     		System.out.println("5. Ordenacion de Libros");
+    		System.out.println("6. ");
+    		System.out.println("7. ");
+    		System.out.println("8. Borrar catálogo");
     		System.out.println("Introduce la opcion:");
     	
-    		opcion = leerOpcion(5);
+    		opcion = leerOpcion(8);
     		
     	}while(opcion <=0);
     	
@@ -148,7 +162,19 @@ public class Main {
     	
     }
     
+    public static void borrarcatalogo(ArrayList<Libro>catalogo) {
+ 
+			for(int libros = 0;libros<catalogo.size();libros = 0) {
+				catalogo.remove(libros);
+			}
+    }
     
+    public static void ordennatural(ArrayList<Libro>catalogo){
+    	catalogo.sort();
+	
+    }
+    	
+    	
 
 	@Override
 	public String toString() {

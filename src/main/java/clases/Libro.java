@@ -63,6 +63,18 @@ public class Libro {
 		this.paginas = paginas;
 	}
 	
-	
+	public boolean equals (Object o) {
+        boolean devu=false;
+        Libro a = (Libro)o;
+        
+        if (this==o) {
+        	devu=true;
+        }else {
+        	if(this.isbn.equalsIgnoreCase(a.isbn)) 
+        		devu=true;
+        }
+        
+    	return devu;
+        }
 
 }
