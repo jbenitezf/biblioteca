@@ -63,6 +63,11 @@ public class Libro {
 		this.paginas = paginas;
 	}
 	
+	public String toStringfile() {
+		return " " + titulo + "," + isbn + "," + genero + "," + autor + ","
+				+ paginas+"\n";
+	}
+	
 	public boolean equals (Object o) {
         boolean devu=false;
         Libro a = (Libro)o;
@@ -77,4 +82,10 @@ public class Libro {
     	return devu;
         }
 
+	@Override
+	public String toString() {
+		return " " + titulo + " " + isbn + " " + genero + " " + autor + " "
+				+ paginas ;
+	}
+	
 }

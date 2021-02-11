@@ -3,6 +3,11 @@
  */
 package clases;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -34,7 +39,7 @@ public class Main {
 				//TODO Lista de Libros
 				break;
 			case 5:
-				ordennatural(catalogo);
+//				ordennatural(catalogo);
 				//TODO Lista de Libros
 				break;
 			case 6:
@@ -42,6 +47,7 @@ public class Main {
 				break;
 			case 7:
 				//TODO Lista de Libros
+				escribirenfichero(catalogo);
 				break;
 			case 8:
 				//TODO Lista de Libros
@@ -64,7 +70,7 @@ public class Main {
     		System.out.println("4. Búsqueda de Libros");
     		System.out.println("5. Ordenacion de Libros");
     		System.out.println("6. ");
-    		System.out.println("7. ");
+    		System.out.println("7. Escribir en un fichero");
     		System.out.println("8. Borrar catálogo");
     		System.out.println("Introduce la opcion:");
     	
@@ -146,8 +152,7 @@ public class Main {
     	for(int i=0;i<catalogo.size();i++) {
     			System.out.print(i+1+".");
     	  		Libro libro = catalogo.get(i);
-    	  		System.out.println(" " +libro.getTitulo() + " " + libro.getIsbn() + " " + 
-    	  		libro.getGenero() + " " + libro.getAutor() + " " + libro.getPaginas());
+    	  		System.out.println(libro);
     	  }
     	}
     
@@ -169,9 +174,29 @@ public class Main {
 			}
     }
     
-    public static void ordennatural(ArrayList<Libro>catalogo){
-    	catalogo.sort();
-	
+//    public static void ordennatural(ArrayList<Libro>catalogo){
+//    	catalogo.sort();
+//	
+//    }
+    
+    public static void escribirenfichero(ArrayList<Libro>catalogo) {
+    	String seleccionado = null;
+    	System.out.println("El fichero debe ser de esta estructura 'nombredefichero.txt':");
+    	Scanner teclado = new Scanner(System.in);
+    	seleccionado = teclado.next();
+    	System.out.println("El fichero:"+seleccionado);
+    	try {
+  	      FileWriter myWriter = new FileWriter(seleccionado);
+  	      for (Libro l: catalogo) {
+  	    	  myWriter.write(l.toStringfile());
+  	    	  
+  	      }
+  	      myWriter.close();
+  	      System.out.println("Se ha escrito el fichero");
+  	    } catch (IOException e) {
+  	      System.out.println("An error occurred.");
+  	      e.printStackTrace();
+  	    }
     }
     	
     	
