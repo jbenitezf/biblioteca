@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+//import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
 
 public class Main {
     
@@ -41,9 +42,11 @@ public class Main {
 			case 5:
 //				ordennatural(catalogo);
 				//TODO Lista de Libros
+				mostrar(texto);
 				break;
 			case 6:
 				//TODO Lista de Libros
+				cargarfichero(catalogo);
 				break;
 			case 7:
 				//TODO Lista de Libros
@@ -69,7 +72,7 @@ public class Main {
     		System.out.println("3. Baja de Libros");
     		System.out.println("4. B√∫squeda de Libros");
     		System.out.println("5. Ordenacion de Libros");
-    		System.out.println("6. ");
+    		System.out.println("6. Cargar un fichero");
     		System.out.println("7. Escribir en un fichero");
     		System.out.println("8. Borrar cat√°logo");
     		System.out.println("Introduce la opcion:");
@@ -124,7 +127,24 @@ public class Main {
     	
     	return datos;
     }
+    String texto = "El libro de la selva;1234;Antonio";
+    public static boolean validaNombre_Exp(String texto) {
+    	
+        return texto.matches("^([A-Za-z]+[ ]?){1,5});([0-9]){0,8};([A-Z]{1}[a-z]+[ ]?){1,2}$");
+    }
     
+//    public static boolean validado(String datos) {
+//    	boolean validado=false;
+//    	Pattern pat = Pattern.compile("abc");
+//        Matcher mat = pat.matcher(datos);
+//        if (mat.find()) {
+//            System.out.println("V·lido");                                                                            
+//        } else {
+//            System.out.println("No V·lido");                                                                         
+//        }
+//    	return validado;
+//    }
+//    
     private static Libro procesaEntrada(String entrada) {
     	Libro libro = null;
     	
@@ -194,10 +214,42 @@ public class Main {
   	      myWriter.close();
   	      System.out.println("Se ha escrito el fichero");
   	    } catch (IOException e) {
-  	      System.out.println("An error occurred.");
+  	      System.out.println("ha ocurrido un error");
   	      e.printStackTrace();
   	    }
     }
+    
+    public static void cargarfichero(ArrayList<Libro>catalogo) {
+    	String seleccionado = null;
+    	System.out.println("El fichero debe ser de esta estructura 'nombredefichero.txt':");
+    	Scanner teclado = new Scanner(System.in);
+    	seleccionado = teclado.next();
+    	System.out.println("El fichero:"+seleccionado);
+    	    try {
+    	      File myObj = new File(seleccionado);
+    	      Scanner myReader = new Scanner(myObj);
+    	      while (myReader.hasNextLine()) {
+    	        String data = myReader.nextLine();
+    	        Libro libro = null;
+    	        String [] datos = data.split(",");
+    	    	
+    	    	String titulo = datos[0];
+    	    	String isbn = datos[1];
+    	    	Genero genero = Genero.getGenero(datos[2]);
+    	    	String autor = datos[3];
+    	    	Integer paginas = Integer.parseInt(datos[4]);
+    	    	
+    	    	libro = new Libro(titulo,isbn,genero,autor,paginas);
+    	    	catalogo.add(libro);
+    	      }
+    	      myReader.close();
+    	    } catch (FileNotFoundException e) {
+    	      System.out.println("An error occurred.");
+    	      e.printStackTrace();
+    	    }
+    }
+    	
+    
     	
     	
 
