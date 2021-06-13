@@ -9,13 +9,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 //import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
 
 public class Main {
-    
+    /*
+     * Método principal donde se ejecutan el resto de métodos mediante un menu
+     */
     public static void main (String [] args) {
     	
     	ArrayList<Libro> catalogo = new ArrayList<Libro>();
@@ -38,11 +41,12 @@ public class Main {
 				break;
 			case 4:
 				//TODO Lista de Libros
+				busquedalibro(catalogo);
 				break;
 			case 5:
-//				ordennatural(catalogo);
+				ordenarLibro(catalogo);
 				//TODO Lista de Libros
-				mostrar(texto);
+				
 				break;
 			case 6:
 				//TODO Lista de Libros
@@ -62,6 +66,9 @@ public class Main {
     	}
     }
     
+    /*
+     * Muestra las opciones del menu y llama al metodo leerOpcion
+     */
     private static int menu() {
     	int opcion=0;
     	
@@ -70,11 +77,11 @@ public class Main {
     		System.out.println("1. Alta de Libro");
     		System.out.println("2. Lista de Libros");
     		System.out.println("3. Baja de Libros");
-    		System.out.println("4. BÃºsqueda de Libros");
+    		System.out.println("4. Bússqueda de Libros");
     		System.out.println("5. Ordenacion de Libros");
     		System.out.println("6. Cargar un fichero");
     		System.out.println("7. Escribir en un fichero");
-    		System.out.println("8. Borrar catÃ¡logo");
+    		System.out.println("8. Borrar catálogo");
     		System.out.println("Introduce la opcion:");
     	
     		opcion = leerOpcion(8);
@@ -83,7 +90,9 @@ public class Main {
     	
     	return opcion;
     }
-    
+    /*
+     * Metodo que lee la opcion y la devuelve
+     */
     private static int leerOpcion(int max) {
     	int opcion = -1;
     	try {
@@ -92,12 +101,14 @@ public class Main {
     		if(opcion>max)
     			opcion=-1;
     	}catch (InputMismatchException e) {
-			System.out.println("OpciÃ³n incorrecta");
+			System.out.println("Opción incorrecta");
 		}
     	
     	return opcion;
     }
-    
+    /*
+     * metodo que almacena un libro en el catalogo llamando a varios metodos
+     */
     private static void alta(ArrayList<Libro> catalogo) {
     	//Leer de la entrada
     	String datosLibro = obtenerDatosLibro();
@@ -108,7 +119,9 @@ public class Main {
     	catalogo.add(libro);
     	//Meter el libro en el catalogo
     }
-    
+    /*
+     * metodo que pide los datos de los libros y los devulve al metodo alta
+     */
     private static String obtenerDatosLibro() {
     	String datos=null;
     	
@@ -121,30 +134,15 @@ public class Main {
     			if(true)//Supongo de momento que valida siempre
     				validado=true;
     		}catch (InputMismatchException e) {
-				System.out.println("Datos de entrada no vÃ¡lidos");
+				System.out.println("Datos de entrada no válidos");
 			}
     	}
     	
     	return datos;
     }
-    String texto = "El libro de la selva;1234;Antonio";
-    public static boolean validaNombre_Exp(String texto) {
-    	
-        return texto.matches("^([A-Za-z]+[ ]?){1,5});([0-9]){0,8};([A-Z]{1}[a-z]+[ ]?){1,2}$");
-    }
-    
-//    public static boolean validado(String datos) {
-//    	boolean validado=false;
-//    	Pattern pat = Pattern.compile("abc");
-//        Matcher mat = pat.matcher(datos);
-//        if (mat.find()) {
-//            System.out.println("Válido");                                                                            
-//        } else {
-//            System.out.println("No Válido");                                                                         
-//        }
-//    	return validado;
-//    }
-//    
+    /*
+     * metodo que procesa la cadena pedida y devuelve un libro con esos datos
+     */
     private static Libro procesaEntrada(String entrada) {
     	Libro libro = null;
     	
@@ -160,14 +158,18 @@ public class Main {
     	
     	return libro;
     }
-    
+    /*
+     * metodo auxiliar para leer una cadena y que devulve la linea leida
+     */
     private static String leerCadena() {
     	String opcion = null;
     	Scanner teclado = new Scanner(System.in);
         opcion=teclado.nextLine();
     	return opcion;
     }
-    
+    /*
+     * metodo que recorre el catalogo y muestra todos los libros 
+     */
     public static void listarlibro(ArrayList<Libro>catalogo) {
     	for(int i=0;i<catalogo.size();i++) {
     			System.out.print(i+1+".");
@@ -175,7 +177,9 @@ public class Main {
     	  		System.out.println(libro);
     	  }
     	}
-    
+    /*
+     * metodo que pide un libro y luego lo borra del catalogo por posicion
+     */
     public static void borrar(ArrayList<Libro>catalogo) {
     	int libroelegido = 0;
     	System.out.println("Elige el libro que quiere borrar:");
@@ -186,19 +190,51 @@ public class Main {
         catalogo.remove(libroelegido);
     	
     }
-    
+    /*
+     * metodo que limpia el catalogo completo
+     */
     public static void borrarcatalogo(ArrayList<Libro>catalogo) {
  
 			for(int libros = 0;libros<catalogo.size();libros = 0) {
 				catalogo.remove(libros);
 			}
     }
-    
-//    public static void ordennatural(ArrayList<Libro>catalogo){
-//    	catalogo.sort();
-//	
-//    }
-    
+    /*
+     * metodo que odena los libros de un catalogo por titulo o por pagina
+     */
+    private static void ordenarLibro(ArrayList<Libro> catalogo) {
+
+    		System.out.println("Deseas ordenar la lista de libros por título o por página?(título/página");
+    		Scanner teclado = new Scanner(System.in);
+    		String entrada = teclado.next();
+    		if (entrada.equalsIgnoreCase("título")) {
+    			Collections.sort(catalogo);
+    		} else {
+    			Libro libro = new Libro();
+    			Collections.sort(catalogo, libro);
+    		}
+    	}
+    /*
+     * metodo que busca un libro mediante isbn y si existe muestra los datos de ese libro, si no muestra que no existe
+     */
+    public static void busquedalibro(ArrayList<Libro>catalogo){
+    	Scanner teclado = new Scanner(System.in);
+    	System.out.println("Introduzca el isbn que desea buscar");
+		String isbn = teclado.next();
+		
+		Libro comparador = new Libro();
+		comparador.setIsbn(isbn);
+		
+		int existe = catalogo.indexOf(comparador);
+		if (existe != -1) 
+			System.out.println(catalogo.get(existe));
+		else
+			System.out.println("El libro no existe en nuestro catálogo");
+
+    }
+    /*
+     * pide el nombre de un fichero y lo crea si es correcto, si no muestra un error
+     */
     public static void escribirenfichero(ArrayList<Libro>catalogo) {
     	String seleccionado = null;
     	System.out.println("El fichero debe ser de esta estructura 'nombredefichero.txt':");
@@ -218,7 +254,9 @@ public class Main {
   	      e.printStackTrace();
   	    }
     }
-    
+    /*
+     * pide el nombre de un fichero y lo carga si es correcto, si no muestra un error
+     */
     public static void cargarfichero(ArrayList<Libro>catalogo) {
     	String seleccionado = null;
     	System.out.println("El fichero debe ser de esta estructura 'nombredefichero.txt':");
